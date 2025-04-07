@@ -1,0 +1,35 @@
+sequenceDiagram
+    participant browser
+    participant server
+    
+    browser->>server: POST the form data to https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    
+    Note left of server: The server accesses the payload's body, creates a new note object and adds it to notes array 
+
+    server->>browser: redirect browser to https://studies.cs.helsinki.fi/exampleapp/notes
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server->>browser: the HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server->>browser: the css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server->>browser: the Javascript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the Javascript code that fetches the JSON from the server
+    
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "Hello! Is this a good course?", "date": "2025-04-06T11:13:45.151Z" }, ... ]
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that renders the notes
