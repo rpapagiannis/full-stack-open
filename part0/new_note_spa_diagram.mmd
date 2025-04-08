@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: POST note content & date to https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+
+    Note left of server: Server parses payload, does not save it to db
+
+    server-->>browser: 201, {"message":"note created"}
+    deactivate server
+
+    Note right of browser: Browser updates local notes array, clears the stale ul and redraws the notes
+    
